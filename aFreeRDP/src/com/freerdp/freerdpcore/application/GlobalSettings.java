@@ -21,9 +21,7 @@ public class GlobalSettings {
 	private static final String PREF_UI_SWAPMOUSEBUTTONS = "ui.swap_mouse_buttons";
 	private static final String PREF_UI_HIDEZOOMCONTROLS = "ui.hide_zoom_controls";
 	private static final String PREF_UI_AUTOSCROLLTOUCHPOINTER = "ui.auto_scroll_touchpointer";
-
 	private static final String PREF_POWER_DISCONNECTTIMEOUT = "power.disconnect_timeout";
-	
 	private static final String PREF_SECURITY_ACCEPTALLCERTIFICATES = "security.accept_certificates";
 
 	private static SharedPreferences settings;

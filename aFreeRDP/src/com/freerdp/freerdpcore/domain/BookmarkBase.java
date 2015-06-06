@@ -210,7 +210,6 @@ public class BookmarkBase implements Parcelable, Cloneable
 		{	
 			if (isPredefined())
 				return (width + "x" + height);
-			
 			return (isAutomatic() ? "automatic" : "custom");
 		}
 

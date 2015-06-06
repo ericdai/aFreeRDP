@@ -11,8 +11,6 @@ package com.freerdp.freerdpcore.presentation;
 
 import java.io.File;
 
-import com.freerdp.freerdpcore.R;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -23,6 +21,8 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.freerdp.freerdpcore.R;
 
 public class ApplicationSettingsActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {
 

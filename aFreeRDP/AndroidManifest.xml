@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.freerdp.freerdpcore"
+    android:installLocation="auto"
+    android:versionCode="1"
+    android:versionName="1.1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="17" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
+
+    <application
+        android:name=".application.GlobalApp"
+        android:icon="@drawable/icon_launcher_freerdp"
+        android:label="@string/app_title" >
+
+        <!-- Activity to create shortcuts -->
+        <activity
+            android:name=".presentation.ShortcutsActivity"
+            android:label="@string/title_create_shortcut"
+            android:theme="@style/Theme.Main" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- It is recommended that you use an activity-alias to provide the "CREATE_SHORTCUT" -->
+        <!-- intent-filter.  This gives you a way to set the text (and optionally the -->
+        <!-- icon) that will be seen in the launcher's create-shortcut user interface. -->
+        <activity-alias
+            android:name=".presentation.CreateShortcuts"
+            android:label="@string/title_create_shortcut"
+            android:targetActivity="com.freerdp.freerdpcore.presentation.ShortcutsActivity" >
+
+            <!-- This intent-filter allows your shortcuts to be created in the launcher. -->
+            <intent-filter>
+                <action android:name="android.intent.action.CREATE_SHORTCUT" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity
+            android:name=".presentation.BookmarkActivity"
+            android:label="@string/title_bookmark_settings"
+            android:theme="@style/Theme.Settings" >
+            <intent-filter>
+                <action android:name="freerdp.intent.action.BOOKMARK" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="preferences" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".presentation.ApplicationSettingsActivity"
+            android:label="@string/title_application_settings"
+            android:theme="@style/Theme.Settings"
+            android:windowSoftInputMode="stateHidden" >
+        </activity>
+        <activity
+            android:name=".presentation.SessionActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard"
+            android:theme="@android:style/Theme.Black.NoTitleBar"
+            android:windowSoftInputMode="adjustResize" >
+        </activity>
+        <activity
+            android:name=".presentation.AboutActivity"
+            android:label="@string/title_about"
+            android:theme="@style/Theme.Main" >
+        </activity>
+        <activity
+            android:name=".presentation.HelpActivity"
+            android:label="@string/title_help"
+            android:theme="@style/Theme.Main" >
+        </activity>
+
+        <!-- Main activity -->
+        <activity
+            android:name=".presentation.HomeActivity"
+            android:alwaysRetainTaskState="true"
+            android:label="@string/app_title"
+            android:theme="@style/Theme.Main" >
+            <intent-filter android:label="@string/app_title" >
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="*"
+                    android:pathPattern=".*\\.rdp"
+                    android:scheme="http" />
+                <data
+                    android:host="*"
+                    android:pathPattern=".*\\.rdp"
+                    android:scheme="file" />
+                <data android:mimeType="*/*" />
+            </intent-filter>
+        </activity>
+
+        <!-- Session request handler activity - used for search and internally to start sessions -->
+        <!-- This should actually be defined in FreeRDPCore lib but Android manifest merging will -->
+        <!-- append the libs manifest to the apps manifest and therefore aliasing is not possible -->
+        <activity
+            android:name=".services.SessionRequestHandlerActivity"
+            android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:theme="@android:style/Theme.NoDisplay" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+
+        <activity-alias
+            android:name=".services.SessionRequestHandlerActivity"
+            android:targetActivity=".services.SessionRequestHandlerActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity-alias>
+
+        <receiver
+            android:name=".application.NetworkStateReceiver"
+            android:enabled="true" >
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+        <provider
+            android:name=".services.FreeRDPSuggestionProvider"
+            android:authorities="com.freerdp.freerdpcore.services.freerdpsuggestionprovider" >
+        </provider>
+    </application>
+
+</manifest>

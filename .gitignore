@@ -11,6 +11,8 @@
 # Generated files
 bin/
 gen/
+obj/
+.settings/
 
 # Gradle files
 .gradle/
